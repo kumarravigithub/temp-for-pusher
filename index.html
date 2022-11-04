@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Pusher Test</title>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('3a4d32868d1911d46832', {
+            cluster: 'us2'
+        });
+        var url = new URL(window.location);
+        var id_channel = url.searchParams.get("id");
+
+        var channel = pusher.subscribe(id_channel);
+        channel.bind('complete', function (data) {
+            
+            alert(JSON.stringify(data));
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Pusher Test</h1>
+    <p>
+        Try publishing an event to channel <code id="channel_name">my-channel</code>
+        with event name <code>complete</code>.
+    <p id="message_data">sdfdsfds</p>
+    </p>
+    <script>
+        document.getElementById("channel_name").innerHTML = id_channel
+    </script>
+</body>
